@@ -43,7 +43,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 40,
               ),
-              //Text field for username
+              //Add image field////////////////////////////
+              Stack(
+                children: [
+                  const CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                        "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=612x612&w=0&h=lGpj2vWAI3WUT1JeJWm1PRoHT3V15_1pdcTn2szdwQ0="),
+                  ),
+                  Positioned(
+                    bottom: -10,
+                    right: -12,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              //Text field for username////////////////////
               TextFieldInput(
                 textEditingController: _emailController,
                 hintText: "Username",
@@ -52,14 +71,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 10,
               ),
-              //Text field for email
+              //Text field for email///////////////////////
               TextFieldInput(
                 textEditingController: _emailController,
                 hintText: "Email",
                 textInputType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 10),
-              //Text field for password
+              //Text field for password////////////////////
               TextFieldInput(
                 textEditingController: _passwordController,
                 hintText: "Password",
@@ -67,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 isPass: true,
               ),
               const SizedBox(height: 10),
-              //Submit button
+              //Submit button//////////////////////////////
               InkWell(
                 onTap: () {},
                 child: Container(
@@ -87,7 +106,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 10),
               Flexible(child: Container(), flex: 2),
-              //Transition to Signup page
+              //Transition to Signup page//////////////////////////////
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
