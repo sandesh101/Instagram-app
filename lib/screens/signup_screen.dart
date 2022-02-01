@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_app/resources/auth_method.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
 
@@ -64,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 20),
               //Text field for username////////////////////
               TextFieldInput(
-                textEditingController: _emailController,
+                textEditingController: _usernameController,
                 hintText: "Username",
                 textInputType: TextInputType.emailAddress,
               ),
@@ -88,10 +89,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 10),
               //Submit button//////////////////////////////
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                    username: _usernameController.text,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                  );
+                  print(res);
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: const Text('Login'),
+                  child: const Text('Sign Up'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   decoration: const ShapeDecoration(
@@ -111,7 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: const Text('Don\'t have an account?'),
+                    child: const Text('ALrady have an account?'),
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   const SizedBox(
@@ -121,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onTap: () {},
                     child: Container(
                       child: const Text(
-                        'Sign Up',
+                        'Login',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 8),
