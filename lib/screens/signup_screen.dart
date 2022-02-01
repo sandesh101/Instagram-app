@@ -3,22 +3,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _usernameController.dispose();
   }
 
   @override
@@ -40,6 +42,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(
                 height: 40,
+              ),
+              //Text field for username
+              TextFieldInput(
+                textEditingController: _emailController,
+                hintText: "Username",
+                textInputType: TextInputType.emailAddress,
+              ),
+              const SizedBox(
+                height: 10,
               ),
               //Text field for email
               TextFieldInput(
