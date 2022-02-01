@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_app/resources/auth_method.dart';
 import 'package:instagram_app/utils/colors.dart';
+import 'package:instagram_app/utils/utils.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -15,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
 
   @override
   void dispose() {
@@ -22,6 +27,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List imageUrl = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = imageUrl;
+    });
   }
 
   @override
@@ -47,16 +59,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               //Add image field////////////////////////////
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                        "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=612x612&w=0&h=lGpj2vWAI3WUT1JeJWm1PRoHT3V15_1pdcTn2szdwQ0="),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 40,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(
+                              "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=20&m=1223671392&s=612x612&w=0&h=lGpj2vWAI3WUT1JeJWm1PRoHT3V15_1pdcTn2szdwQ0="),
+                        ),
                   Positioned(
                     bottom: -10,
                     right: -12,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectImage,
                       icon: const Icon(Icons.add_a_photo),
                     ),
                   ),
@@ -94,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     username: _usernameController.text,
                     email: _emailController.text,
                     password: _passwordController.text,
+                    file: _image!,
                   );
                   print(res);
                 },
