@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_app/resources/auth_method.dart';
+import 'package:instagram_app/responsive/mobilescreen_layout.dart';
+import 'package:instagram_app/responsive/responsive_screen_layout.dart';
+import 'package:instagram_app/responsive/webscreen_layout.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/utils/utils.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
@@ -55,6 +58,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (res != 'success') {
       //get a snackbar
       showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     }
   }
 
