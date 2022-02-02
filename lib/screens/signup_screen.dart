@@ -20,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -34,6 +35,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _image = imageUrl;
     });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+      username: _usernameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      file: _image!,
+    );
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != 'success') {
+      //get a snackbar
+      showSnackBar(res, context);
+    }
   }
 
   @override
@@ -106,18 +126,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 10),
               //Submit button//////////////////////////////
               InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().signUpUser(
-                    username: _usernameController.text,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                    file: _image!,
-                  );
-                  print(res);
-                },
+                onTap: signUpUser,
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: const Text('Sign Up'),
+                  child: _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : const Text('Sign Up'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   decoration: const ShapeDecoration(
