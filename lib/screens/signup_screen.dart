@@ -130,7 +130,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: _isLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ))
                       : const Text('Sign Up'),
                   width: double.infinity,
                   alignment: Alignment.center,
