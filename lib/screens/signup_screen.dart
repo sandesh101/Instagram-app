@@ -8,6 +8,8 @@ import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/utils/utils.dart';
 import 'package:instagram_app/widgets/text_field_input.dart';
 
+import 'login_screen.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -54,6 +56,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       //get a snackbar
       showSnackBar(res, context);
     }
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
   @override
@@ -161,7 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
                       child: const Text(
                         'Login',
