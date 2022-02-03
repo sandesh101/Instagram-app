@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_app/provider/user_provider.dart';
-import 'package:instagram_app/utils/dimension.dart';
+import 'package:instagram_app/utils/global_variable.dart';
 import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatefulWidget {
