@@ -19,12 +19,16 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   Uint8List? _file;
   final TextEditingController _captionController = TextEditingController();
+  bool _isLoading = false;
 
   void postImage(
     String uid,
     String username,
     String profileImage,
   ) async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       String res = await FirestoreMethod().uploadPost(
         _captionController.text,
@@ -34,8 +38,14 @@ class _AddPostState extends State<AddPost> {
         profileImage,
       );
       if (res == 'success') {
-        showSnackBar("Successfully Posted", context);
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar('Successfully Posted', context);
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         showSnackBar(res, context);
       }
     } catch (e) {
@@ -133,6 +143,9 @@ class _AddPostState extends State<AddPost> {
             ),
             body: Column(
               children: [
+                _isLoading
+                    ? const LinearProgressIndicator(color: blueColor)
+                    : Container(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
