@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_app/models/user.dart';
 import 'package:instagram_app/provider/user_provider.dart';
+import 'package:instagram_app/resources/firestore_method.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,29 @@ class AddPost extends StatefulWidget {
 class _AddPostState extends State<AddPost> {
   Uint8List? _file;
   final TextEditingController _captionController = TextEditingController();
+
+  void postImage(
+    String uid,
+    String username,
+    String profileImage,
+  ) async {
+    try {
+      String res = await FirestoreMethod().uploadPost(
+        _captionController.text,
+        _file!,
+        uid,
+        username,
+        profileImage,
+      );
+      if (res == 'success') {
+        showSnackBar("Successfully Posted", context);
+      } else {
+        showSnackBar(res, context);
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -67,6 +91,12 @@ class _AddPostState extends State<AddPost> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _captionController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
     return _file == null
@@ -89,7 +119,8 @@ class _AddPostState extends State<AddPost> {
               title: const Text("Post to"),
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      postImage(user.uid, user.username, user.photoUrl),
                   child: const Text(
                     'Post',
                     style: TextStyle(
