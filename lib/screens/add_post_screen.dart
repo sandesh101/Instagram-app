@@ -2,8 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_app/models/user.dart';
+import 'package:instagram_app/provider/user_provider.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key? key}) : super(key: key);
@@ -55,6 +58,7 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
     return _file == null
         ? Center(
             child: IconButton(
@@ -92,9 +96,10 @@ class _AddPostState extends State<AddPost> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       backgroundImage: NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_RoC_frrJpDi7gcc8vmDelGOTpYbhn8AiOuUwM_liy4sd424ZizeFYNwDI8eFabG7-VY&usqp=CAU'),
+                        user.photoUrl,
+                      ),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.3,
