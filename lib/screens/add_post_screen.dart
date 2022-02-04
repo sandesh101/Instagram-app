@@ -17,6 +17,7 @@ class AddPost extends StatefulWidget {
 
 class _AddPostState extends State<AddPost> {
   Uint8List? _file;
+  final TextEditingController _captionController = TextEditingController();
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -46,9 +47,18 @@ class _AddPostState extends State<AddPost> {
                   Uint8List file = await pickImage(
                     ImageSource.gallery,
                   );
-                  setState(() {
-                    _file = file;
-                  });
+                  setState(
+                    () {
+                      _file = file;
+                    },
+                  );
+                },
+              ),
+              SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
                 },
               ),
             ],
@@ -103,8 +113,9 @@ class _AddPostState extends State<AddPost> {
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.3,
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: _captionController,
+                        decoration: const InputDecoration(
                           hintText: 'Add Caption',
                           border: InputBorder.none,
                         ),
@@ -119,8 +130,7 @@ class _AddPostState extends State<AddPost> {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_RoC_frrJpDi7gcc8vmDelGOTpYbhn8AiOuUwM_liy4sd424ZizeFYNwDI8eFabG7-VY&usqp=CAU'),
+                              image: MemoryImage(_file!),
                               fit: BoxFit.fill,
                               alignment: FractionalOffset.topCenter,
                             ),
