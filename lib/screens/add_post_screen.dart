@@ -145,7 +145,9 @@ class _AddPostState extends State<AddPost> {
               children: [
                 _isLoading
                     ? const LinearProgressIndicator(color: blueColor)
-                    : Container(),
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 0),
+                      ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
