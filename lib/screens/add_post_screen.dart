@@ -130,7 +130,7 @@ class _AddPostState extends State<AddPost> {
               backgroundColor: mobileBackground,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {},
+                onPressed: clearImage,
               ),
               title: const Text("Post to"),
               actions: [
