@@ -64,6 +64,42 @@ class PostCard extends StatelessWidget {
               ],
             ),
           ),
+          //IMAGE SECTION
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.35,
+            width: double.infinity,
+            child: Image.network(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvIdD74Dj1FwX3sOCRuwFgNlXNW64dknk8VTifSvZC4gsYJGEp7FKRiSO1NYp9BfVvToU&usqp=CAU',
+              fit: BoxFit.cover,
+            ),
+          ),
+          //UTILITY SECTION(LIKE, COMMECT, SHARE)
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.favorite),
+                color: Colors.red,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.comment_outlined),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.send),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.bookmark_border),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
