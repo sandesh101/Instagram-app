@@ -100,6 +100,12 @@ class _AddPostState extends State<AddPost> {
         });
   }
 
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
