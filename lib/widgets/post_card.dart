@@ -129,11 +129,18 @@ class PostCard extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
-                          text: 'This is some description to be replaced',
+                          text: ' This is some description to be replaced',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    'View all 200 comments',
+                    style: TextStyle(fontSize: 16, color: secondaryColor),
                   ),
                 ),
               ],
