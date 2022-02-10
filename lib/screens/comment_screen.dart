@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_app/utils/colors.dart';
+import 'package:instagram_app/widgets/comment_card.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _CommentScreenState extends State<CommentScreen> {
         backgroundColor: mobileBackground,
         title: const Text('Commnets'),
       ),
+      body: CommentCard(),
       bottomNavigationBar: SafeArea(
         child: Container(
           height: kToolbarHeight,
@@ -25,15 +27,15 @@ class _CommentScreenState extends State<CommentScreen> {
           padding: const EdgeInsets.only(left: 16, right: 8),
           child: Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 18,
                 backgroundImage: NetworkImage(
                   'https://images.unsplash.com/photo-1644402079748-a3eba5224f29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 8.0),
+                  padding: EdgeInsets.only(left: 16.0, right: 8.0),
                   child: TextField(
                     decoration: InputDecoration(
                         hintText: 'Comment as username',
