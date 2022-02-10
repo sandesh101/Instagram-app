@@ -16,6 +16,15 @@ class _CommentScreenState extends State<CommentScreen> {
         backgroundColor: mobileBackground,
         title: const Text('Commnets'),
       ),
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          height: kToolbarHeight,
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          padding: const EdgeInsets.only(left: 16, right: 8),
+        ),
+      ),
     );
   }
 }
