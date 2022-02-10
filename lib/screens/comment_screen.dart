@@ -23,6 +23,37 @@ class _CommentScreenState extends State<CommentScreen> {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           padding: const EdgeInsets.only(left: 16, right: 8),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 18,
+                backgroundImage: NetworkImage(
+                  'https://images.unsplash.com/photo-1644402079748-a3eba5224f29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Comment as username',
+                        border: InputBorder.none),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 8.0),
+                  child: const Text(
+                    'Post',
+                    style: TextStyle(color: blueColor),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
