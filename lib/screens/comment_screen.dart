@@ -37,12 +37,12 @@ class _CommentScreenState extends State<CommentScreen> {
                   user.photoUrl,
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16.0, right: 8.0),
+                  padding: const EdgeInsets.only(left: 16.0, right: 8.0),
                   child: TextField(
                     decoration: InputDecoration(
-                        hintText: 'Comment as username',
+                        hintText: "Comment as ${user.username}",
                         border: InputBorder.none),
                   ),
                 ),
