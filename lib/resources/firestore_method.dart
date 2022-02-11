@@ -54,7 +54,40 @@ class FirestoreMethod {
         });
       }
     } catch (e) {
-      print(e.toString());
+      e.toString();
+    }
+  }
+
+  Future<void> postComment(
+    String postId,
+    String text,
+    String uid,
+    String name,
+    String profilePics,
+  ) async {
+    try {
+      if (text.isNotEmpty) {
+        String commentId = const Uuid().v1();
+        await _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set(
+          {
+            'profilePic': profilePics,
+            'name': name,
+            'uid': uid,
+            'text': text,
+            'commentId': commentId,
+            'datePublished': DateTime.now(),
+          },
+        );
+      } else {
+        print("Comment is empty");
+      }
+    } catch (e) {
+      e.toString();
     }
   }
 }
