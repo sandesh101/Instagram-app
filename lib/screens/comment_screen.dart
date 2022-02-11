@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_app/models/user.dart';
 import 'package:instagram_app/provider/user_provider.dart';
+import 'package:instagram_app/resources/firestore_method.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/widgets/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentScreen extends StatefulWidget {
-  const CommentScreen({Key? key}) : super(key: key);
+  final snap;
+  const CommentScreen({Key? key, required this.snap}) : super(key: key);
 
   @override
   _CommentScreenState createState() => _CommentScreenState();
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  final TextEditingController _commentController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _commentController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -41,6 +51,7 @@ class _CommentScreenState extends State<CommentScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 8.0),
                   child: TextField(
+                    controller: _commentController,
                     decoration: InputDecoration(
                         hintText: "Comment as ${user.username}",
                         border: InputBorder.none),
@@ -48,7 +59,15 @@ class _CommentScreenState extends State<CommentScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () async {
+                  await FirestoreMethod().postComment(
+                    widget.snap['postId'],
+                    _commentController.text,
+                    user.uid,
+                    user.username,
+                    user.photoUrl,
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 8.0),

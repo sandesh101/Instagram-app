@@ -87,7 +87,7 @@ class FirestoreMethod {
         print("Comment is empty");
       }
     } catch (e) {
-      e.toString();
+      print(e.toString());
     }
   }
 }
