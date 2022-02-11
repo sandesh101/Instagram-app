@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_app/models/user.dart';
+import 'package:instagram_app/provider/user_provider.dart';
 import 'package:instagram_app/utils/colors.dart';
 import 'package:instagram_app/widgets/comment_card.dart';
+import 'package:provider/provider.dart';
 
 class CommentScreen extends StatefulWidget {
   const CommentScreen({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class CommentScreen extends StatefulWidget {
 class _CommentScreenState extends State<CommentScreen> {
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackground,
@@ -27,10 +31,10 @@ class _CommentScreenState extends State<CommentScreen> {
           padding: const EdgeInsets.only(left: 16, right: 8),
           child: Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 18,
                 backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1644402079748-a3eba5224f29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
+                  user.photoUrl,
                 ),
               ),
               const Expanded(
