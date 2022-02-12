@@ -41,7 +41,7 @@ class _CommentCardState extends State<CommentCard> {
                           ),
                         ),
                         TextSpan(
-                          text: 'Some Comments',
+                          text: 'Some Comments from the user',
                         ),
                       ],
                     ),
