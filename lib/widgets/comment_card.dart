@@ -42,7 +42,7 @@ class _CommentCardState extends State<CommentCard> {
                         ),
                         TextSpan(
                           text: 'Some Comments from the user',
-                        ), //SuperBusyDay
+                        ), 
                       ],
                     ),
                   ),
