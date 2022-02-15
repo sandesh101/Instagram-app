@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_app/models/user.dart';
 import 'package:instagram_app/provider/user_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CommentCard extends StatefulWidget {
-  const CommentCard({Key? key}) : super(key: key);
+  final snap;
+  const CommentCard({Key? key, required this.snap}) : super(key: key);
 
   @override
   _CommentCardState createState() => _CommentCardState();
@@ -13,7 +15,6 @@ class CommentCard extends StatefulWidget {
 class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Row(
@@ -21,7 +22,7 @@ class _CommentCardState extends State<CommentCard> {
           CircleAvatar(
             radius: 18,
             backgroundImage: NetworkImage(
-              user.photoUrl,
+              widget.snap['profilePic'],
             ),
           ),
           Expanded(
@@ -35,23 +36,25 @@ class _CommentCardState extends State<CommentCard> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: user.username,
+                          text: widget.snap['username'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
-                          text: 'Some Comments from the user',
-                        ), 
+                          text: '${widget.snap['text']}',
+                        ),
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
-                    child: const Text(
-                      '10/02/2022',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    child: Text(
+                      DateFormat.yMMMd().format(
+                        widget.snap['datePublished'].toDate(),
+                      ),
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
