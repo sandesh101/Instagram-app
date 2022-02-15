@@ -51,7 +51,8 @@ class _CommentCardState extends State<CommentCard> {
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       DateFormat.yMMMd().format(
-                        widget.snap['datePublished'].toDate(),
+                        widget.snap['datePublished']
+                            .toDate(), //showing comment date⏲⏲⏲
                       ),
                       style: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.w400),
