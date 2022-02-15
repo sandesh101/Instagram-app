@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instagram_app/models/post.dart';
 import 'package:instagram_app/resources/storage_method.dart';
+import 'package:instagram_app/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class FirestoreMethod {
@@ -87,7 +88,16 @@ class FirestoreMethod {
         print("Comment is empty");
       }
     } catch (e) {
-      print(e.toString());
+      e.toString();
+    }
+  }
+
+  //Deleting a post❌❌
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection('posts').doc(postId).delete();
+    } catch (e) {
+      e.toString();
     }
   }
 }
