@@ -105,7 +105,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             text: "Follow",
                                             backgroundColor: blueColor,
                                             textColor: primaryColor,
-                                            borderColor: Colors.grey,
+                                            borderColor: blueColor,
                                             function: () {},
                                           ),
                               ],
