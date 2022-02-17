@@ -1,21 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_app/utils/colors.dart';
+import 'package:instagram_app/utils/utils.dart';
 import 'package:instagram_app/widgets/follow_button.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final String uid;
+  const ProfileScreen({Key? key, required this.uid}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var userData = {};
+  int postLength = 0;
+  int followers = 0;
+  int following = 0;
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    try {
+      var userSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.uid)
+          .get();
+      var postSnap = await FirebaseFirestore.instance
+          .collection('posts')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+      postLength = postSnap.docs.length;
+      userData = userSnap.data()!;
+      followers = userSnap.data()!['followers'].length;
+      following = userSnap.data()!['following'].length;
+      setState(() {});
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackground,
-        title: Text('Username'),
+        title: Text(userData['username']),
       ),
       body: ListView(
         children: [
@@ -28,8 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CircleAvatar(
                       radius: 40,
                       backgroundColor: Colors.grey,
-                      backgroundImage: NetworkImage(
-                          'https://images.unsplash.com/photo-1644945583064-e4906134ae14?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'),
+                      backgroundImage: NetworkImage(userData['photoUrl']),
                     ),
                     Expanded(
                       flex: 1,
@@ -39,9 +72,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              buildStatColumn(3, 'Post'),
-                              buildStatColumn(3, 'Followers'),
-                              buildStatColumn(3, 'Following'),
+                              buildStatColumn(postLength, 'Post'),
+                              buildStatColumn(followers, 'Followers'),
+                              buildStatColumn(following, 'Following'),
                             ],
                           ),
                           Row(
@@ -60,6 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                   ],
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Text(
+                    userData['username'],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
