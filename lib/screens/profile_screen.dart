@@ -18,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int postLength = 0;
   int followers = 0;
   int following = 0;
+  bool isFollowing = false;
   @override
   void initState() {
     super.initState();
@@ -38,6 +39,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       userData = userSnap.data()!;
       followers = userSnap.data()!['followers'].length;
       following = userSnap.data()!['following'].length;
+      isFollowing = userSnap
+          .data()!['followers']
+          .contains(FirebaseAuth.instance.currentUser!.uid);
       setState(() {});
     } catch (e) {
       showSnackBar(e.toString(), context);
@@ -65,33 +69,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       backgroundImage: NetworkImage(userData['photoUrl']),
                     ),
                     Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              buildStatColumn(postLength, 'Post'),
-                              buildStatColumn(followers, 'Followers'),
-                              buildStatColumn(following, 'Following'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              FollowButton(
-                                text: "Edit Profile",
-                                backgroundColor: mobileBackground,
-                                textColor: primaryColor,
-                                borderColor: Colors.grey,
-                                function: () {},
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                buildStatColumn(postLength, 'Post'),
+                                buildStatColumn(followers, 'Followers'),
+                                buildStatColumn(following, 'Following'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                FirebaseAuth.instance.currentUser!.uid ==
+                                        widget.uid
+                                    ? FollowButton(
+                                        text: "Edit Profile",
+                                        backgroundColor: mobileBackground,
+                                        textColor: primaryColor,
+                                        borderColor: Colors.grey,
+                                        function: () {},
+                                      )
+                                    : isFollowing
+                                        ? FollowButton(
+                                            text: "Unfollow",
+                                            backgroundColor: Colors.white,
+                                            textColor: Colors.black,
+                                            borderColor: Colors.grey,
+                                            function: () {},
+                                          )
+                                        : FollowButton(
+                                            text: "Follow",
+                                            backgroundColor: blueColor,
+                                            textColor: primaryColor,
+                                            borderColor: Colors.grey,
+                                            function: () {},
+                                          ),
+                              ],
+                            ),
+                          ],
+                        )),
                   ],
                 ),
                 Container(
